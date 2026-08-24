@@ -106,12 +106,7 @@
     .system-logos .paulistana{width:82px;height:36px}
     .system-title{font-weight:800;white-space:nowrap}
     .print-meta{
-      display:flex;
-      justify-content:flex-end;
-      font-size:7.5pt;
-      color:#666;
-      margin-bottom:7px;
-      font-family:Verdana, Geneva, sans-serif;
+      display:none!important;
     }
     .print-help{
       font-size:12px;
