@@ -1,4 +1,4 @@
 window.APP_CONFIG = {
   supabaseUrl: "https://ekjagynsogaugehjsxjy.supabase.co",
-  supabaseAnonKey: "SUA_CHAVE_PUBLICA"
+  supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVramFneW5zb2dhdWdlaGpzeGp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1NzcxOTcsImV4cCI6MjEwMzE1MzE5N30.BT0hq3ICAYxrfQ8BQ6bK9EqquADXxLdrM5HcKKOZ7qw"
 };
