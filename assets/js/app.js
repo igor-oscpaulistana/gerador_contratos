@@ -511,6 +511,9 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   }
 
   function generateAndSave(){
+    if(typeof window.supabaseSaveContract === "function"){
+      return window.supabaseSaveContract();
+    }
     const issues=validateAll();
     if(issues.length){alert("Revise os campos obrigatórios.");return}
     const id = editingId || ("ct_"+Date.now());
@@ -710,6 +713,9 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   }
 
   function deleteContract(id){
+    if(typeof window.supabaseDeleteContract === "function"){
+      return window.supabaseDeleteContract(id);
+    }
     if(!confirm("Excluir este contrato do histórico local?")) return;
     const hist=getHistory().filter(x=>x.id!==id);
     localStorage.setItem("osc_contract_history",JSON.stringify(hist));
@@ -717,6 +723,9 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   }
 
   function getHistory(){
+    if(typeof window.supabaseGetHistory === "function"){
+      return window.supabaseGetHistory();
+    }
     try{return JSON.parse(localStorage.getItem("osc_contract_history") || "[]")}catch{return []}
   }
 
@@ -794,7 +803,7 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
 
   function doLogin(){
     const error = document.getElementById("loginError");
-    error.textContent = "Autenticação não configurada. Configure o Supabase para entrar.";
+    error.textContent = "O módulo de autenticação não foi carregado. Atualize a página com Ctrl+F5.";
     error.classList.remove("hidden");
   }
 
@@ -1704,6 +1713,9 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   };
 
   function generateAndSave(){
+    if(typeof window.supabaseSaveContract === "function"){
+      return window.supabaseSaveContract();
+    }
     const issues=contractMode==="ALTERACAO"?validateAlteracao():validateAll();
     if(issues.length){alert("Revise os campos obrigatórios.");return}
     const id=editingId||("ct_"+Date.now());
@@ -1772,7 +1784,7 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   }
 
   document.getElementById("loginPassword").addEventListener("keydown",e=>{
-    if(e.key==="Enter") doLogin();
+    if(e.key==="Enter"){ if(window.supabaseLogin) window.supabaseLogin(); else doLogin(); }
   });
   document.getElementById("loginEmail").addEventListener("keydown",e=>{
     if(e.key==="Enter") document.getElementById("loginPassword").focus();
