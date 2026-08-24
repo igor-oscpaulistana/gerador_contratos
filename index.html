@@ -24,7 +24,7 @@
         <label>Senha</label>
         <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••">
       </div>
-      <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="doLogin()">Entrar</button>
+      <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="window.supabaseLogin()">Entrar</button>
       <div id="loginError" class="notice error login-error hidden">E-mail ou senha inválidos.</div>
     </div>
   </section>
@@ -40,7 +40,7 @@
     <div class="top-actions">
       <button onclick="showView('home')">Início</button>
       <button onclick="showView('history')">Histórico</button>
-      <button onclick="logout()">Sair</button>
+      <button onclick="window.supabaseLogout()">Sair</button>
     </div>
   </header>
 
@@ -147,8 +147,8 @@
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/config.js"></script>
-  <script src="./assets/js/app.js"></script>
-  <script src="./assets/js/supabase-adapter.js"></script>
+  <script src="./assets/js/config.js?v=8"></script>
+  <script src="./assets/js/app.js?v=8"></script>
+  <script src="./assets/js/supabase-adapter.js?v=8"></script>
 </body>
 </html>
