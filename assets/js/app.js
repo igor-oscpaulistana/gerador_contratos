@@ -126,7 +126,7 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
         </div>
         <div class="field full">
           <label>Logradouro</label>
-          <input value="${esc(e.endereco)}" oninput="formData.empresa.endereco=this.value" placeholder="Rua, Avenida...">
+          <input data-flat-address-field="logradouro" value="${esc(e.endereco)}" oninput="formData.empresa.endereco=this.value" placeholder="Rua, Avenida...">
         </div>
         <div class="field quarter">
           <label>Número</label>
@@ -139,20 +139,22 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
         <div class="field quarter">
           <label>CEP</label>
           <input inputmode="numeric" maxlength="9" value="${esc(e.cep)}"
-                 oninput="this.value=maskCEP(this.value);formData.empresa.cep=this.value"
+                 oninput="this.value=maskCEP(this.value);formData.empresa.cep=this.value;maybeLookupCEPFlat(this)"
+                 onblur="maybeLookupCEPFlat(this)"
                  placeholder="00000-000">
+          <div class="cep-feedback" data-flat-cep-feedback></div>
         </div>
         <div class="field third">
           <label>Bairro</label>
-          <input value="${esc(e.bairro)}" oninput="formData.empresa.bairro=this.value">
+          <input data-flat-address-field="bairro" value="${esc(e.bairro)}" oninput="formData.empresa.bairro=this.value">
         </div>
         <div class="field third">
           <label>Cidade</label>
-          <input value="${esc(e.cidade)}" oninput="formData.empresa.cidade=this.value">
+          <input data-flat-address-field="cidade" value="${esc(e.cidade)}" oninput="formData.empresa.cidade=this.value">
         </div>
         <div class="field third">
           <label>UF</label>
-          <select onchange="formData.empresa.uf=this.value">${ufOptions(e.uf)}</select>
+          <select data-flat-address-field="uf" onchange="formData.empresa.uf=this.value">${ufOptions(e.uf)}</select>
         </div>
         <div class="field third">
           <label>Data do contrato</label>
@@ -245,7 +247,8 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
 
             <div class="field full">
               <label>Logradouro</label>
-              <input value="${esc(end.logradouro)}" oninput="formData.socios[${i}].endereco.logradouro=this.value" placeholder="Rua, Avenida...">
+              <input data-address-path="formData.socios[${i}].endereco" data-address-field="logradouro"
+                     value="${esc(end.logradouro)}" oninput="formData.socios[${i}].endereco.logradouro=this.value" placeholder="Rua, Avenida...">
             </div>
 
             <div class="field quarter">
@@ -261,23 +264,28 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
             <div class="field quarter">
               <label>CEP</label>
               <input inputmode="numeric" maxlength="9" value="${esc(end.cep)}"
-                     oninput="this.value=maskCEP(this.value);formData.socios[${i}].endereco.cep=this.value"
+                     oninput="this.value=maskCEP(this.value);formData.socios[${i}].endereco.cep=this.value;maybeLookupCEPStructured('formData.socios[${i}].endereco',this)"
+                     onblur="maybeLookupCEPStructured('formData.socios[${i}].endereco',this)"
                      placeholder="00000-000">
+              <div class="cep-feedback" data-cep-feedback-path="formData.socios[${i}].endereco"></div>
             </div>
 
             <div class="field third">
               <label>Bairro</label>
-              <input value="${esc(end.bairro)}" oninput="formData.socios[${i}].endereco.bairro=this.value">
+              <input data-address-path="formData.socios[${i}].endereco" data-address-field="bairro"
+                     value="${esc(end.bairro)}" oninput="formData.socios[${i}].endereco.bairro=this.value">
             </div>
 
             <div class="field third">
               <label>Cidade</label>
-              <input value="${esc(end.cidade)}" oninput="formData.socios[${i}].endereco.cidade=this.value">
+              <input data-address-path="formData.socios[${i}].endereco" data-address-field="cidade"
+                     value="${esc(end.cidade)}" oninput="formData.socios[${i}].endereco.cidade=this.value">
             </div>
 
             <div class="field third">
               <label>UF</label>
-              <select onchange="formData.socios[${i}].endereco.uf=this.value">${ufOptions(end.uf)}</select>
+              <select data-address-path="formData.socios[${i}].endereco" data-address-field="uf"
+                      onchange="formData.socios[${i}].endereco.uf=this.value">${ufOptions(end.uf)}</select>
             </div>
           </div>
         </div>
@@ -503,9 +511,6 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
     if(!formData.socios.some(s=>s.administrador)) issues.push("Selecione pelo menos um administrador.");
     if(formData.empresa.naturezaJuridica==="SOCIEDADE_LIMITADA_UNIPESSOAL" && formData.socios.length!==1){
       issues.push("Sociedade Limitada Unipessoal deve possuir apenas um sócio neste protótipo.");
-    }
-    if(formData.empresa.naturezaJuridica==="SOCIEDADE_EMPRESARIA_LIMITADA" && formData.socios.length<2){
-      issues.push("Para Sociedade Empresária Limitada, cadastre ao menos dois sócios ou selecione Sociedade Limitada Unipessoal.");
     }
     return issues;
   }
@@ -753,6 +758,7 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
       @page{size:A4;margin:15mm 16mm 15mm 16mm}
       body{font-family:Verdana, Geneva, sans-serif;font-size:10pt;line-height:1.45;color:#111}
       .contract-page{width:auto;margin:0;padding:0;font-family:Verdana, Geneva, sans-serif;font-size:10pt}
+      .contract-page p,.contract-page li{ text-align:justify; text-justify:inter-word; }
       .logos{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
       .logo-img{object-fit:contain}
       .logo-img.souza{width:220px;height:74px}
@@ -825,6 +831,156 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
     const digits = String(value || "").replace(/\D/g,"").slice(0,8);
     if(digits.length <= 5) return digits;
     return digits.slice(0,5) + "-" + digits.slice(5);
+  }
+
+  async function consultarCEP(cep){
+    const digits = String(cep || "").replace(/\D/g,"");
+    if(!/^\d{8}$/.test(digits)) return null;
+
+    const response = await fetch(`https://viacep.com.br/ws/${digits}/json/`, {
+      method:"GET",
+      headers:{ "Accept":"application/json" }
+    });
+
+    if(!response.ok){
+      throw new Error("Não foi possível consultar o CEP.");
+    }
+
+    const data = await response.json();
+    if(data && data.erro) return { erro:true };
+    return data;
+  }
+
+  function setCepFeedback(element,message,type=""){
+    if(!element) return;
+    element.textContent = message || "";
+    element.className = `cep-feedback ${type}`.trim();
+  }
+
+  function updateFlatAddressField(field,value){
+    const el = document.querySelector(`[data-flat-address-field="${field}"]`);
+    if(el && value !== undefined && value !== null && value !== ""){
+      el.value = value;
+    }
+  }
+
+  async function maybeLookupCEPFlat(input){
+    const digits = String(input?.value || "").replace(/\D/g,"");
+    const feedback = document.querySelector("[data-flat-cep-feedback]");
+
+    if(digits.length !== 8){
+      if(input) delete input.dataset.lastCep;
+      setCepFeedback(feedback,"");
+      return;
+    }
+
+    if(input.dataset.lastCep === digits) return;
+    input.dataset.lastCep = digits;
+    setCepFeedback(feedback,"Consultando CEP...","loading");
+
+    try{
+      const data = await consultarCEP(digits);
+      if(!data || data.erro){
+        setCepFeedback(feedback,"CEP não encontrado.","error");
+        return;
+      }
+
+      if(data.logradouro){
+        formData.empresa.endereco = data.logradouro;
+        updateFlatAddressField("logradouro", data.logradouro);
+      }
+      if(data.bairro){
+        formData.empresa.bairro = data.bairro;
+        updateFlatAddressField("bairro", data.bairro);
+      }
+      if(data.localidade){
+        formData.empresa.cidade = data.localidade;
+        updateFlatAddressField("cidade", data.localidade);
+      }
+      if(data.uf){
+        formData.empresa.uf = data.uf;
+        updateFlatAddressField("uf", data.uf);
+      }
+
+      setCepFeedback(feedback,"Endereço localizado pelo CEP.","success");
+    }catch(err){
+      console.error("Erro ao consultar CEP:",err);
+      setCepFeedback(feedback,"Não foi possível consultar o CEP agora. Preencha o endereço manualmente.","error");
+    }
+  }
+
+  function resolveFormDataPath(path){
+    const clean = String(path || "")
+      .replace(/^formData\./,"")
+      .replace(/\[(\d+)\]/g,".$1");
+
+    return clean.split(".").filter(Boolean).reduce((acc,key)=>{
+      return acc == null ? null : acc[key];
+    },formData);
+  }
+
+  function updateStructuredAddressDom(path,field,value){
+    document.querySelectorAll("[data-address-path]").forEach(el=>{
+      if(el.dataset.addressPath===path && el.dataset.addressField===field && value){
+        el.value=value;
+      }
+    });
+  }
+
+  function getStructuredCepFeedback(path){
+    return Array.from(document.querySelectorAll("[data-cep-feedback-path]"))
+      .find(el=>el.dataset.cepFeedbackPath===path) || null;
+  }
+
+  async function maybeLookupCEPStructured(path,input){
+    const digits = String(input?.value || "").replace(/\D/g,"");
+    const feedback = getStructuredCepFeedback(path);
+
+    if(digits.length !== 8){
+      if(input) delete input.dataset.lastCep;
+      setCepFeedback(feedback,"");
+      return;
+    }
+
+    if(input.dataset.lastCep===digits) return;
+    input.dataset.lastCep=digits;
+    setCepFeedback(feedback,"Consultando CEP...","loading");
+
+    try{
+      const data = await consultarCEP(digits);
+      if(!data || data.erro){
+        setCepFeedback(feedback,"CEP não encontrado.","error");
+        return;
+      }
+
+      const address = resolveFormDataPath(path);
+      if(!address){
+        setCepFeedback(feedback,"Não foi possível atualizar o endereço automaticamente.","error");
+        return;
+      }
+
+      if(data.logradouro){
+        address.logradouro=data.logradouro;
+        updateStructuredAddressDom(path,"logradouro",data.logradouro);
+      }
+      if(data.bairro){
+        address.bairro=data.bairro;
+        updateStructuredAddressDom(path,"bairro",data.bairro);
+      }
+      if(data.localidade){
+        address.cidade=data.localidade;
+        updateStructuredAddressDom(path,"cidade",data.localidade);
+      }
+      if(data.uf){
+        address.uf=data.uf;
+        updateStructuredAddressDom(path,"uf",data.uf);
+      }
+
+      setCepFeedback(feedback,"Endereço localizado pelo CEP.","success");
+    }catch(err){
+      console.error("Erro ao consultar CEP:",err);
+      setCepFeedback(feedback,"Não foi possível consultar o CEP agora. Preencha o endereço manualmente.","error");
+    }
   }
 
   function formatDateTime(date){
@@ -1186,7 +1342,8 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
       <div class="form-grid">
         <div class="field full">
           <label>Logradouro</label>
-          <input value="${esc(a.logradouro)}" oninput="${path}.logradouro=this.value">
+          <input data-address-path="${path}" data-address-field="logradouro"
+                 value="${esc(a.logradouro)}" oninput="${path}.logradouro=this.value">
         </div>
         <div class="field quarter">
           <label>Número</label>
@@ -1199,20 +1356,25 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
         <div class="field quarter">
           <label>CEP</label>
           <input inputmode="numeric" maxlength="9" value="${esc(a.cep)}"
-                 oninput="this.value=maskCEP(this.value);${path}.cep=this.value"
+                 oninput="this.value=maskCEP(this.value);${path}.cep=this.value;maybeLookupCEPStructured('${path}',this)"
+                 onblur="maybeLookupCEPStructured('${path}',this)"
                  placeholder="00000-000">
+          <div class="cep-feedback" data-cep-feedback-path="${path}"></div>
         </div>
         <div class="field third">
           <label>Bairro</label>
-          <input value="${esc(a.bairro)}" oninput="${path}.bairro=this.value">
+          <input data-address-path="${path}" data-address-field="bairro"
+                 value="${esc(a.bairro)}" oninput="${path}.bairro=this.value">
         </div>
         <div class="field third">
           <label>Cidade</label>
-          <input value="${esc(a.cidade)}" oninput="${path}.cidade=this.value">
+          <input data-address-path="${path}" data-address-field="cidade"
+                 value="${esc(a.cidade)}" oninput="${path}.cidade=this.value">
         </div>
         <div class="field third">
           <label>UF</label>
-          <select onchange="${path}.uf=this.value">${ufOptions(a.uf)}</select>
+          <select data-address-path="${path}" data-address-field="uf"
+                  onchange="${path}.uf=this.value">${ufOptions(a.uf)}</select>
         </div>
       </div>`;
   }
@@ -1560,7 +1722,7 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   }
 
   function naturePhrase(nat,sociosCount){
-    if(nat==="SOCIEDADE_LIMITADA_UNIPESSOAL" || sociosCount===1) return "Sociedade Limitada Unipessoal";
+    if(nat==="SOCIEDADE_LIMITADA_UNIPESSOAL") return "Sociedade Limitada Unipessoal";
     return "Sociedade Empresária Limitada";
   }
 
