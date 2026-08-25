@@ -314,6 +314,16 @@
     }
     input:focus,select:focus,textarea:focus{border-color:#62a8ea;box-shadow:0 0 0 3px rgba(11,102,195,.09)}
     textarea{min-height:110px;resize:vertical}
+    .cep-feedback{
+      min-height:16px;
+      margin-top:5px;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.35;
+    }
+    .cep-feedback.loading{color:#5f6f82}
+    .cep-feedback.success{color:var(--green)}
+    .cep-feedback.error{color:var(--red)}
     .nav-row{
       display:flex;justify-content:space-between;gap:12px;
       margin-top:20px;padding-top:18px;border-top:1px solid var(--line)
@@ -367,6 +377,11 @@
       box-shadow:0 8px 25px rgba(0,0,0,.12);
       font-family:Verdana, Geneva, sans-serif;
       color:#111;line-height:1.5;font-size:10pt
+    }
+    .contract-page p,
+    .contract-page li{
+      text-align:justify;
+      text-justify:inter-word;
     }
     .contract-page .logos{
       display:flex;justify-content:space-between;align-items:center;margin-bottom:22px
