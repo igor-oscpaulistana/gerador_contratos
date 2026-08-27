@@ -82,6 +82,8 @@
         return;
       }
 
+      window.CURRENT_SUPABASE_USER = data.session.user;
+      window.updatePrintPaginationStyle?.();
       await loadHistory();
       window.showApp();
     }catch(err){
@@ -93,6 +95,7 @@
   window.supabaseLogout = async function(){
     if(client) await client.auth.signOut();
     historyCache = [];
+    window.CURRENT_SUPABASE_USER = null;
     document.getElementById("appTopbar").classList.add("hidden");
     document.getElementById("appMain").classList.add("hidden");
     document.getElementById("loginView").classList.remove("hidden");
@@ -124,7 +127,7 @@
       cnpj: normalized.empresa?.cnpj || null,
       form_data: normalized,
       document_html: snapshot,
-      template_version: normalized.tipoDocumento === "ALTERACAO" ? "alteracao-v1" : "constituicao-v1"
+      template_version: normalized.tipoDocumento === "ALTERACAO" ? "alteracao-v1" : "constituicao-v2-vila-salvi"
     };
 
     let result;
@@ -207,6 +210,8 @@
 
     const { data } = await client.auth.getSession();
     if(data.session){
+      window.CURRENT_SUPABASE_USER = data.session.user;
+      window.updatePrintPaginationStyle?.();
       try{
         await loadHistory();
         window.showApp();

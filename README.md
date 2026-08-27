@@ -66,3 +66,24 @@ A versão atual gera arquivo `.doc` compatível com Word diretamente no navegado
 ## 5. Importante
 
 O frontend usa somente a chave pública/anon do Supabase. **Nunca** publique a chave `service_role`.
+
+
+## Atualização v10
+
+- Corpo dos contratos justificado na visualização, impressão/PDF e Word.
+- Busca automática de endereço pelo CEP via ViaCEP.
+- Preenchimento automático de logradouro, bairro, cidade e UF.
+- Mantido preenchimento manual como contingência caso a consulta de CEP esteja indisponível.
+- Sociedade Empresária Limitada passa a aceitar também quadro com um único sócio.
+
+
+## Atualização v11 — Modelo Vila Salvi
+
+- Constituição ajustada às 15 cláusulas da minuta Vila Salvi.
+- Campo de sexo por sócio, com flexões masculino/feminino na redação.
+- Campo de porte da empresa: ME ou EPP.
+- Qualificação dos sócios com apenas o nome em negrito.
+- Texto inicial de constituição atualizado para sócio único, com variação feminina e plural.
+- Formatação Verdana 10 pt, linhas de 15/16 pt, recuos e margens aproximados da minuta.
+- Quebras de página de Constituição antes das cláusulas 4, 10 e 15 para reproduzir a organização em 4 blocos do modelo.
+- Paginação de impressão no padrão página/total + inicial do usuário autenticado, por exemplo: 1/4 C.
