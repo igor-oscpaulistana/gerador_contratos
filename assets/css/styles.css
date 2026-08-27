@@ -368,62 +368,104 @@
       text-align:center;color:var(--muted);padding:42px 18px
     }
     .contract-wrap{
-      background:#dfe4ea;padding:24px;border-radius:16px;overflow:auto
+      background:#dfe4ea;
+      padding:24px;
+      border-radius:16px;
+      overflow:auto;
     }
-    .contract-wrap{
-      background:#dfe4ea;padding:24px;border-radius:16px;overflow:auto
+
+    .contract-document{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+      align-items:center;
     }
-    .contract-page{
-      width:794px;
-      min-height:1123px;
-      margin:0 auto;
-      background:white;
-      padding:28pt 63.7pt 34pt 63.8pt;
+
+    .contract-sheet{
+      width:210mm;
+      height:297mm;
+      background:#fff;
       box-shadow:0 8px 25px rgba(0,0,0,.12);
+      overflow:hidden;
       font-family:Verdana, Geneva, sans-serif;
       color:#111;
+      flex:none;
+    }
+
+    .sheet-inner{
+      box-sizing:border-box;
+      position:relative;
+      width:100%;
+      height:100%;
+      padding:10mm 22.5mm 15mm 22.5mm;
+    }
+
+    .sheet-header{
+      height:27mm;
+      display:flex;
+      align-items:flex-start;
+      margin-bottom:10mm;
+    }
+
+    .sheet-header .logos{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin:0;
+    }
+
+    .sheet-header .logo-img{
+      display:block;
+      object-fit:contain;
+      object-position:center;
+      background:#fff;
+    }
+
+    .sheet-header .logo-img.souza{width:58mm;height:23mm}
+    .sheet-header .logo-img.paulistana{width:48mm;height:23mm}
+
+    .sheet-body{
+      font-family:Verdana, Geneva, sans-serif;
       font-size:10pt;
       line-height:15pt;
+      padding-bottom:15mm;
     }
-    .contract-page p,
-    .contract-page li{
+
+    .sheet-body p,
+    .sheet-body li{
       font-family:Verdana, Geneva, sans-serif;
       font-size:10pt;
       line-height:16pt;
       text-align:justify;
       text-justify:inter-word;
       margin-top:0;
-      margin-bottom:10pt;
+      margin-bottom:8pt;
     }
+
     .contract-intro p,
     .contract-closing p{
       line-height:15pt;
     }
-    .contract-page .qualification{
+
+    .sheet-body .qualification{
       margin-left:35.4pt;
       margin-right:0;
       line-height:15pt;
     }
-    .contract-page .resolution-text{
+
+    .sheet-body .resolution-text{
       text-indent:14.2pt;
       line-height:15pt;
     }
-    .contract-page .logos{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:22pt;
+
+    .contract-title{
+      text-align:center;
+      font-weight:700;
     }
-    .logo-img{
-      display:block;
-      object-fit:contain;
-      object-position:center;
-      background:#fff;
-    }
-    .logo-img.souza{width:255px;height:86px}
-    .logo-img.paulistana{width:215px;height:86px}
-    .contract-title{text-align:center;font-weight:700}
-    .contract-title h2{
+
+    .contract-title h2,
+    .contract-title h3{
       margin:0;
       font-family:Verdana, Geneva, sans-serif;
       font-size:10pt;
@@ -431,15 +473,14 @@
       font-weight:700;
       text-decoration:none;
     }
-    .contract-title h3{
-      margin:0 0 8pt;
-      font-family:Verdana, Geneva, sans-serif;
-      font-size:10pt;
-      line-height:15pt;
-      font-weight:700;
-      text-decoration:none;
+
+    .contract-title h3{margin-bottom:4pt}
+
+    .contract-line{
+      border-top:2px solid #222;
+      margin-bottom:4pt;
     }
-    .contract-line{border-top:2px solid #222;margin-bottom:4pt}
+
     .clause-title{
       font-family:Verdana, Geneva, sans-serif;
       font-size:10pt;
@@ -447,45 +488,122 @@
       font-weight:700;
       text-decoration:underline;
       text-align:center;
-      margin:16pt 0 4pt;
+      margin:13pt 0 4pt;
     }
-    .signature{
-      margin-top:42pt;
-      text-align:center;
-      font-family:Verdana, Geneva, sans-serif;
-      font-size:10pt;
-      line-height:15pt;
+
+    .clause-title.first-clause{
+      margin-top:0;
     }
-    .signature .line{margin:70pt auto 4pt;width:260px;border-top:0 solid transparent}
-    .contract-date{text-align:right!important;margin-top:18pt!important}
+
     .quota-table{
       width:100%;
       border-collapse:collapse;
-      margin:8pt 0 12pt;
+      margin:7pt 0 10pt;
+      font-family:Verdana, Geneva, sans-serif;
       font-size:10pt;
       line-height:16pt;
-      font-family:Verdana, Geneva, sans-serif;
     }
+
     .quota-table th,
     .quota-table td{
       border:1px solid #222;
-      padding:2pt 5pt;
+      padding:1pt 5pt;
       vertical-align:middle;
       line-height:16pt;
     }
+
     .quota-table th{
       font-weight:700;
       text-align:center;
       background:#d9d9d9;
     }
+
     .quota-table td.num{
       text-align:right;
       white-space:nowrap;
     }
+
     .quota-table tr.total-row td{
       font-weight:700;
       background:#d9d9d9;
     }
+
+    .signature{
+      margin-top:58pt;
+      text-align:center;
+      font-family:Verdana, Geneva, sans-serif;
+      font-size:10pt;
+      line-height:15pt;
+    }
+
+    .signature .line{
+      margin:0 auto 4pt;
+      width:260px;
+      border-top:0;
+    }
+
+    .contract-date{
+      text-align:right!important;
+      margin-top:20pt!important;
+    }
+
+    .sheet-footer{
+      position:absolute;
+      left:22.5mm;
+      right:22.5mm;
+      bottom:7mm;
+      height:9mm;
+      font-family:Verdana, Geneva, sans-serif;
+      font-size:8pt;
+      line-height:10pt;
+    }
+
+    .sheet-footer-line{
+      border-top:3px solid #6b1b1b;
+      margin-bottom:3mm;
+    }
+
+    .sheet-page-number{
+      text-align:right;
+      font-size:8pt;
+      font-weight:400;
+    }
+
+    /* Compatibilidade com a alteração contratual, que ainda usa contract-page */
+    .contract-page{
+      width:210mm;
+      min-height:297mm;
+      margin:0 auto;
+      background:#fff;
+      padding:14mm 22.5mm 16mm;
+      box-sizing:border-box;
+      box-shadow:0 8px 25px rgba(0,0,0,.12);
+      font-family:Verdana, Geneva, sans-serif;
+      color:#111;
+      font-size:10pt;
+      line-height:15pt;
+    }
+
+    .contract-page p,
+    .contract-page li{
+      font-family:Verdana, Geneva, sans-serif;
+      font-size:10pt;
+      line-height:16pt;
+      text-align:justify;
+      text-justify:inter-word;
+    }
+
+    .contract-page .logos{
+      position:static;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin:0 0 10mm;
+    }
+
+    .contract-page .logo-img.souza{width:58mm;height:23mm}
+    .contract-page .logo-img.paulistana{width:48mm;height:23mm}
+
     .contract-footer,
     .print-meta{display:none!important}
     .modal{
@@ -528,16 +646,17 @@
     @media print{
       @page{
         size:A4;
-        margin:102.5pt 63.7pt 14.2pt 63.8pt;
+        margin:0;
       }
 
       html,body{
+        width:210mm!important;
         margin:0!important;
         padding:0!important;
         background:#fff!important;
-        font-family:Verdana, Geneva, sans-serif!important;
         height:auto!important;
         overflow:visible!important;
+        font-family:Verdana, Geneva, sans-serif!important;
       }
 
       .topbar,
@@ -551,7 +670,8 @@
         display:block!important;
         position:static!important;
         inset:auto!important;
-        width:auto!important;
+        width:210mm!important;
+        max-width:none!important;
         height:auto!important;
         max-height:none!important;
         overflow:visible!important;
@@ -565,9 +685,10 @@
       .modal-card,
       .modal-body,
       #printArea,
-      .contract-wrap{
+      .contract-wrap,
+      .contract-document{
         display:block!important;
-        width:auto!important;
+        width:210mm!important;
         max-width:none!important;
         height:auto!important;
         max-height:none!important;
@@ -579,53 +700,63 @@
         background:#fff!important;
       }
 
-      .contract-page{
+      .contract-sheet{
         display:block!important;
-        width:auto!important;
-        max-width:none!important;
-        min-height:0!important;
-        height:auto!important;
+        position:relative!important;
+        width:210mm!important;
+        height:297mm!important;
+        min-height:297mm!important;
+        max-height:297mm!important;
         margin:0!important;
         padding:0!important;
         box-shadow:none!important;
+        overflow:hidden!important;
+        page-break-after:always!important;
+        break-after:page!important;
         background:#fff!important;
-        color:#111!important;
+      }
+
+      .contract-sheet:last-child{
+        page-break-after:auto!important;
+        break-after:auto!important;
+      }
+
+      .sheet-inner{
+        box-sizing:border-box!important;
+        width:210mm!important;
+        height:297mm!important;
+        padding:10mm 22.5mm 15mm 22.5mm!important;
+        margin:0!important;
+      }
+
+      .sheet-header{
+        height:27mm!important;
+        margin:0 0 10mm!important;
+      }
+
+      .sheet-header .logos{
+        position:static!important;
+        width:100%!important;
+        height:23mm!important;
+        margin:0!important;
+        display:flex!important;
+        justify-content:space-between!important;
+        align-items:flex-start!important;
+        background:#fff!important;
+      }
+
+      .sheet-header .logo-img.souza{width:58mm!important;height:23mm!important}
+      .sheet-header .logo-img.paulistana{width:48mm!important;height:23mm!important}
+
+      .sheet-body{
         font-family:Verdana, Geneva, sans-serif!important;
         font-size:10pt!important;
         line-height:15pt!important;
-        overflow:visible!important;
-        page-break-inside:auto!important;
-        break-inside:auto!important;
+        padding-bottom:15mm!important;
       }
 
-      .contract-page .logos{
-        position:fixed!important;
-        top:12pt!important;
-        left:63.8pt!important;
-        right:63.7pt!important;
-        height:72pt!important;
-        margin:0!important;
-        display:flex!important;
-        align-items:center!important;
-        justify-content:space-between!important;
-        background:#fff!important;
-        z-index:10!important;
-      }
-
-      .logo-img.souza{width:58mm!important;height:20mm!important}
-      .logo-img.paulistana{width:48mm!important;height:20mm!important}
-
-      .contract-page::after{
-        content:"";
-        position:fixed;
-        left:63.8pt;
-        right:63.7pt;
-        bottom:17pt;
-        border-top:3px solid #6b1b1b;
-      }
-
-      .contract-page p,
-      .contract-page li{
+      .sheet-body p,
+      .sheet-body li{
         font-family:Verdana, Geneva, sans-serif!important;
         font-size:10pt!important;
         line-height:16pt!important;
@@ -637,15 +768,15 @@
 
       .contract-intro p,
       .contract-closing p,
-      .contract-page .qualification{
+      .sheet-body .qualification{
         line-height:15pt!important;
       }
 
-      .contract-page .qualification{
+      .sheet-body .qualification{
         margin-left:35.4pt!important;
       }
 
-      .contract-page .resolution-text{
+      .sheet-body .resolution-text{
         text-indent:14.2pt!important;
       }
 
@@ -653,8 +784,8 @@
       .clause-title,
       .quota-table,
       .signature{
-        break-inside:avoid;
-        page-break-inside:avoid;
+        break-inside:avoid!important;
+        page-break-inside:avoid!important;
       }
 
       .clause-title{
@@ -663,25 +794,7 @@
         line-height:16pt!important;
         font-weight:700!important;
         text-decoration:underline!important;
-        break-after:avoid;
-        page-break-after:avoid;
-        margin-top:16pt!important;
-        margin-bottom:4pt!important;
-      }
-
-      .page-break-before{
-        break-before:page!important;
-        page-break-before:always!important;
-        margin-top:0!important;
-      }
-
-      .contract-title h2,
-      .contract-title h3{
-        font-family:Verdana, Geneva, sans-serif!important;
-        font-size:10pt!important;
-        line-height:15pt!important;
-        font-weight:700!important;
-        text-decoration:none!important;
+        text-align:center!important;
       }
 
       .quota-table{
@@ -695,7 +808,7 @@
       .quota-table th,
       .quota-table td{
         border:1px solid #222!important;
-        padding:2pt 5pt!important;
+        padding:1pt 5pt!important;
         line-height:16pt!important;
       }
 
@@ -705,6 +818,46 @@
         -webkit-print-color-adjust:exact!important;
         print-color-adjust:exact!important;
       }
+
+      .sheet-footer{
+        display:block!important;
+        position:absolute!important;
+        left:22.5mm!important;
+        right:22.5mm!important;
+        bottom:7mm!important;
+      }
+
+      .sheet-footer-line{
+        border-top:3px solid #6b1b1b!important;
+      }
+
+      /* Alterações contratuais: sem header fixo, evitando sobreposição */
+      .contract-page{
+        display:block!important;
+        position:relative!important;
+        width:210mm!important;
+        min-height:297mm!important;
+        height:auto!important;
+        margin:0!important;
+        padding:14mm 22.5mm 16mm!important;
+        box-sizing:border-box!important;
+        box-shadow:none!important;
+        overflow:visible!important;
+        background:#fff!important;
+        font-family:Verdana, Geneva, sans-serif!important;
+        font-size:10pt!important;
+        line-height:15pt!important;
+      }
+
+      .contract-page .logos{
+        position:static!important;
+        display:flex!important;
+        margin:0 0 10mm!important;
+        height:auto!important;
+      }
+
+      .contract-page .logo-img.souza{width:58mm!important;height:23mm!important}
+      .contract-page .logo-img.paulistana{width:48mm!important;height:23mm!important}
 
       .print-meta,
       .contract-footer{display:none!important}
