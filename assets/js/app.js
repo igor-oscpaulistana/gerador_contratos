@@ -607,10 +607,10 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
         </tr>`;
     }).join("");
 
-    const footer=(page,totalPages=4)=>`
+    const footer=(page)=>`
       <div class="sheet-footer">
         <div class="sheet-footer-line"></div>
-        <div class="sheet-page-number">${page}/${totalPages} ${esc(initial)}</div>
+        <div class="sheet-page-number">${page}/${esc(initial)}</div>
       </div>`;
 
     const header=()=>`<div class="sheet-header">${contractLogosHtml()}</div>`;
@@ -872,7 +872,7 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
         <div class="Section1">${contractHtml(data)}</div>
         <div style="mso-element:footer" id="f1">
           <p class="MsoFooter" style="text-align:right;font-family:Verdana;font-size:8pt">
-            <span style='mso-field-code:" PAGE "'></span>/<span style='mso-field-code:" NUMPAGES "'></span> ${currentUserInitial()}
+            <span style='mso-field-code:" PAGE "'></span>/${currentUserInitial()}
           </p>
         </div>
       </body></html>`;
@@ -1232,26 +1232,8 @@ const steps = ["Empresa","Sócios","Capital","Objeto Social","Administração","
   }
 
   function updatePrintPaginationStyle(){
-    const initial=currentUserInitial().replace(/[^A-Z0-9]/g,"") || "U";
-    let style=document.getElementById("osc-print-pagination-style");
-    if(!style){
-      style=document.createElement("style");
-      style.id="osc-print-pagination-style";
-      document.head.appendChild(style);
-    }
-    style.textContent=`
-      @media print{
-        @page{
-          @bottom-right{
-            content: counter(page) "/" counter(pages) " ${initial}";
-            font-family: Verdana, Geneva, sans-serif;
-            font-size: 8pt;
-            color: #111;
-            vertical-align: top;
-          }
-        }
-      }
-    `;
+    const old=document.getElementById("osc-print-pagination-style");
+    if(old) old.remove();
   }
   window.updatePrintPaginationStyle=updatePrintPaginationStyle;
 
